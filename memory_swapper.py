@@ -16,9 +16,8 @@ sample_dict = {
 # partial list of headers commonly found in jobs from qb.jobinfo(blahblahblah)...
 sample_job =  {
   'id':123456,
-  'reservations':'host=nuke',
-  'requirements':'host.total=3'
+  'reservations':'host=nuke, host.memory=20480',
+  'requirements':'host.total=3, host.memory.total>20480'
   }
 
 for k, v in sample_job.items():
- 
