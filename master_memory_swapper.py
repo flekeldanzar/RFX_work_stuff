@@ -1,4 +1,4 @@
-#!/****/bin/env python 2.7.5
+#!/amay/bin/env python
 
 import qb
 import __future__
@@ -75,16 +75,43 @@ for k, v in memory_dict.items():
 ####################################
 
 for jobid in memory_dict.keys():
+
     target_job_obj = qb.jobinfo(id=jobid) # generates iterable job object.
-    re_req_finder = re.findall(r'\d{4,6}', target_job_obj[0]['requirements'])
-    if len(re_req_finder) == 0: # add requirement line entirely
-        scratch_req_builder = target_job_obj[0]['requirements'] + ', host.memory.total>', str(memory_dict[jobid])
-        print scratch_req_builder
-        #qb.modify({'requirements':scratch_req_builder}, jobid)
-    elif len(re_req_finder) == 1:
-        if re_req_finder[0] == memory_dict[jobid]:
-            print target_job_obj[0]['requirements']
-        elif re_req_finder[0] != memory_dict[jobid]: # replace memory with correct number
-            sub_req_builder = re.sub(r'\d{4,6}', str(memory_dict[jobid]), target_job_obj[0]['requirements'])
-            print sub_req_builder
-            #qb.modify({'requirements':sub_req_builder}, jobid)
+
+    if target_job_obj[0]['cluster'] == '/nuke': # exclusively for handling /nuke jobs.
+        #add a re_nuke_checker or something here.
+        req_nuker  = target_job_obj[0]['requirements'] + ', host.memory.total>' + str(memory_dict[jobid])
+        reserv_nuker = target_job_obj[0]['reservations'] + ', host.memory=' + str(memory_dict[jobid])
+        print req_nuker
+        print reserv_nuker
+        #qb.modify({'requirements':req_nuker}, jobid)
+        #qb.modify({'reservations':reserv_nuker}, jobid)
+    
+    else:
+        re_req_finder = re.findall(r'\d{4,6}', target_job_obj[0]['requirements'])
+
+        if len(re_req_finder) == 0: # add requirement line entirely
+            scratch_req_builder = target_job_obj[0]['requirements'] + ', host.memory.total>', + str(memory_dict[jobid])
+            print scratch_req_builder
+            #qb.modify({'requirements':scratch_req_builder}, jobid)
+        elif len(re_req_finder) == 1:
+            if re_req_finder[0] == memory_dict[jobid]:
+                print target_job_obj[0]['requirements']
+            elif re_req_finder[0] != memory_dict[jobid]: # replace memory with correct number
+                sub_req_builder = re.sub(r'\d{4,6}', str(memory_dict[jobid]), target_job_obj[0]['requirements'])
+                print sub_req_builder
+                #qb.modify({'requirements':sub_req_builder}, jobid)
+
+        re_reserv_finder = re.findall(r'\d{4,6}', target_job_obj[0]['reservations'])
+
+        if len(re_reserv_finder) == 0:
+            scratch_reserv_builder = target_job_obj[0]['reservations'] + ', host.memory=', str(memory_dict[jobid])
+            print scratch_reserv_builder
+            #qb.modify({'reservations':scratch_reserv_builder}, jobid)
+        elif len(re_reserv_finder) == 1:
+            if re_reserv_finder[0] == memory_dict[jobid]:
+                print target_job_obj[0]['reservations']
+            elif re_reserv_finder[0] != memory_dict[jobid]:
+                sub_reserv_builder = re.sub(r'\d{4,6}', str(memory_dict[jobid]), target_job_obj[0]['reservations'])
+                print sub_reserv_builder
+                #qb.modify({'reservations':sub_reserv_builder}, jobid)
