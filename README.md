@@ -8,7 +8,7 @@ The following repository is exclusively for the purposes of experimenting with v
 
 For security purposes, all variables which reference job id's, titles, cluster information, etc. will be fictional. Most variables are constructed specifically for targeted experimentation and should be viewed as drastically simplified in comparison to their real counterparts.
 
-To those of you who have read to this point, the following list is comprised of ideas I would like to see set in motion, in order of importance. Anything with a single greater-than (>) will indicate that the project is started, a double greater-than (>>) means the project is nearly completed but needs 'formalization', an exclamation point (!) means the project has been successfully completed, and a (x) means the project is currently unapproachable with my current knowledge.
+To those of you who have read to this point, the following list is comprised of ideas I would like to see set in motion, in order of importance. Anything with a single greater-than (>) will indicate that the project is started, a double greater-than (>>) means the project is nearly completed but needs 'formalization', an exclamation point (!) means the project has been successfully completed, and a (x) means the project is unapproachable with my current level of knowledge.
 
 1. Automate the updating of reservations/requirements for SIGABRT/SIGSEGV flags in outlog files. (>)
 2. Automate searching for failed frames (black frames) in RV. ()
